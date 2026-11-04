@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نور - موقع إسلامي شامل</title>
+  <!-- Google Fonts: Cairo & Amiri -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at top center, #111a2e 0%, #080d1a 100%);
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-card: rgba(20, 30, 50, 0.6);
+      --glass-border: rgba(212, 175, 55, 0.2);
+      --gold-main: #d4af37;
+      --gold-light: #f3e5ab;
+      --gold-glow: rgba(212, 175, 55, 0.3);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-green: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 10px;
+      overflow-x: hidden;
+    }
+
+    /* Outer Wrapper */
+    .app-container {
+      width: 100%;
+      max-width: 850px;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    /* Header & Date Section */
+    .header-card {
+      background: var(--glass-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header-card::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 200px;
+      background: var(--gold-glow);
+      filter: blur(80px);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .app-title {
+      font-family: 'Amiri', serif;
+      font-size: 2.8rem;
+      color: var(--gold-main);
+      margin-bottom: 5px;
+      text-shadow: 0 0 15px var(--gold-glow);
+    }
+
+    .app-subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+
+    .date-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid var(--glass-border);
+      padding: 8px 20px;
+      border-radius: 50px;
+      color: var(--gold-light);
+      font-size: 0.9rem;
+    }
+
+    /* Quran Verse Card */
+    .verse-card {
+      background: var(--glass-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      position: relative;
+    }
+
+    .verse-card h3 {
+      color: var(--gold-main);
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .verse-text {
+      font-family: 'Amiri', serif;
+      font-size: 1.6rem;
+      line-height: 2.2;
+      color: var(--text-main);
+      margin-bottom: 15px;
+    }
+
+    .verse-info {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* Quran Player */
+    .audio-card {
+      background: var(--glass-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .audio-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--gold-main);
+      font-weight: 700;
+    }
+
+    .surah-select {
+      background: rgba(10, 15, 30, 0.8);
+      color: var(--text-main);
+      border: 1px solid var(--glass-border);
+      padding: 10px 15px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      outline: none;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    audio {
+      width: 100%;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    /* Azkar Tabs */
+    .tabs-container {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 5px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      min-width: 110px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--glass-border);
+      color: var(--text-muted);
+      padding: 12px 15px;
+      border-radius: 14px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .tab-btn.active {
+      background: var(--gold-main);
+      color: #080d1a;
+      border-color: var(--gold-main);
+      box-shadow: 0 0 15px var(--gold-glow);
+    }
+
+    /* Azkar List */
+    .azkar-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .zekr-card {
+      background: var(--glass-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 18px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .zekr-text {
+      font-family: 'Amiri', serif;
+      font-size: 1.35rem;
+      line-height: 2;
+      color: var(--text-main);
+    }
+
+    .zekr-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 12px;
+    }
+
+    .zekr-bless {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      max-width: 70%;
+    }
+
+    .counter-btn {
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid var(--gold-main);
+      color: var(--gold-light);
+      min-width: 80px;
+      height: 42px;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .counter-btn:active {
+      transform: scale(0.95);
+    }
+
+    .counter-btn.done {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: var(--accent-green);
+      color: var(--accent-green);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px 0;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--glass-border);
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Header -->
+    <div class="header-card">
+      <h1 class="app-title">بسم الله الرحمن الرحيم</h1>
+      <p class="app-subtitle">موقع إسلامي للأذكار والقرآن الكريم</p>
+      <div class="date-badge">
+        <i class="fa-regular fa-calendar-alt"></i>
+        <span id="current-date">جاري تحميل التاريخ...</span>
+      </div>
+    </div>
+
+    <!-- Verse of the day -->
+    <div class="verse-card">
+      <h3><i class="fa-solid fa-book-quran"></i> آية اليوم</h3>
+      <div class="verse-text">"أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ"</div>
+      <div class="verse-info">سورة الرعد - الآية 28</div>
+    </div>
+
+    <!-- Quran Player -->
+    <div class="audio-card">
+      <div class="audio-header">
+        <span><i class="fa-solid fa-headphones"></i> الاستماع للقرآن الكريم (مشاري العفاسي)</span>
+      </div>
+      <select class="surah-select" id="surahSelect" onchange="playSurah()">
+        <option value="001">الفاتحة</option>
+        <option value="018">الكهف</option>
+        <option value="036">يس</option>
+        <option value="055">الرحمن</option>
+        <option value="067">الملك</option>
+        <option value="112">الإخلاص</option>
+        <option value="113">الفلق</option>
+        <option value="114">الناس</option>
+      </select>
+      <audio id="audioPlayer" controls>
+        <source id="audioSource" src="https://server8.mp3quran.net/afs/001.mp3" type="audio/mpeg">
+        متصفحك لا يدعم تشغيل الصوت.
+      </audio>
+    </div>
+
+    <!-- Azkar Tabs -->
+    <div class="tabs-container">
+      <button class="tab-btn active" onclick="switchCategory('sabah', this)">أذكار الصباح</button>
+      <button class="tab-btn" onclick="switchCategory('massa', this)">أذكار المساء</button>
+      <button class="tab-btn" onclick="switchCategory('salat', this)">بعد الصلاة</button>
+      <button class="tab-btn" onclick="switchCategory('tasbeeh', this)">تسابيح</button>
+    </div>
+
+    <!-- Azkar List Container -->
+    <div class="azkar-grid" id="azkarGrid">
+      <!-- Content populated via JavaScript -->
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>تم التطوير بحب ليكون صدقة جارية | جاهز للرفع على GitHub Pages</p>
+    </footer>
+
+  </div>
+
+  <script>
+    // Azkar Data
+    const azkarData = {
+      sabah: [
+        { text: "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ لا إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لا شَرِيكَ لَهُ.", count: 1, bless: "من قالها حين يصبح أُعطي خير ما في هذا اليوم." },
+        { text: "اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ.", count: 1, bless: "من أذكار الصباح الثابتة عن النبي ﷺ." },
+        { text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ: عَدَدَ خَلْقِهِ، وَرِضَا نَفْسِهِ، وَزِنَةَ عَرْشِهِ، وَمِدَادَ كَلِمَاتِهِ.", count: 3, bless: "تعدل ساعات طويلة من الذكر." },
+        { text: "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ أَصْلِحْ لِي شَأْنِي كُلَّهُ وَلا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ.", count: 1, bless: "حفظ وصلاح لجميع الشؤون." }
+      ],
+      massa: [
+        { text: "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ وَالْحَمْدُ لِلَّهِ، لا إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لا شَرِيكَ لَهُ.", count: 1, bless: "من قالها حين يمسي أُعطي خير ما في هذه الليلة." },
+        { text: "اللَّهُمَّ بِكَ أَمْسَيْنَا، وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ وَإِلَيْكَ الْمَصِيرُ.", count: 1, bless: "من أذكار المساء المأثورة." },
+        { text: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ.", count: 3, bless: "لم يضره شيء حتى يصبح." }
+      ],
+      salat: [
+        { text: "أَسْتَغْفِرُ اللَّهَ (ثَلاثاً)، اللَّهُمَّ أَنْتَ السَّلامُ وَمِنْكَ السَّلامُ، تَبَارَكْتَ يَا ذَا الْجَلالِ وَالإِكْرَامِ.", count: 1, bless: "تقال فور الانتهاء من الصلاة الفريضة." },
+        { text: "سُبْحَانَ اللَّهِ، وَالْحَمْدُ لِلَّهِ، وَاللَّهُ أَكْبَرُ.", count: 33, bless: "تغفر الخطايا وإن كانت مثل زبد البحر." }
+      ],
+      tasbeeh: [
+        { text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ.", count: 100, bless: "كلمتان خفيفتان على اللسان ثقيلتان في الميزان." },
+        { text: "لا حَوْلَ وَلا قُوَّةَ إِلاَّ بِاللَّهِ.", count: 100, bless: "كنز من كنز الجنة." },
+        { text: "اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ.", count: 10, bless: "من صلى عليّ صلاة صلى الله عليه بها عشراً." }
+      ]
+    };
+
+    let currentTab = 'sabah';
+
+    // Render Azkar List
+    function renderAzkar(cat) {
+      const container = document.getElementById('azkarGrid');
+      container.innerHTML = '';
+
+      azkarData[cat].forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'zekr-card';
+        card.innerHTML = `
+          <div class="zekr-text">${item.text}</div>
+          <div class="zekr-footer">
+            <div class="zekr-bless">${item.bless}</div>
+            <button class="counter-btn" id="btn-${cat}-${index}" onclick="countDown('${cat}', ${index}, ${item.count})">
+              <span>${item.count}</span>
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Handle Counter Click
+    function countDown(cat, index, initialCount) {
+      const btn = document.getElementById(`btn-${cat}-${index}`);
+      let currentVal = parseInt(btn.innerText);
+
+      if (currentVal > 1) {
+        currentVal--;
+        btn.innerHTML = `<span>${currentVal}</span>`;
+      } else {
+        btn.innerHTML = `<i class="fa-solid fa-check"></i> تم`;
+        btn.classList.add('done');
+      }
+
+      if (navigator.vibrate) {
+        navigator.vibrate(40);
+      }
+    }
+
+    // Switch Category
+    function switchCategory(cat, element) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      element.classList.add('active');
+      currentTab = cat;
+      renderAzkar(cat);
+    }
+
+    // Quran Audio Player Change
+    function playSurah() {
+      const surahVal = document.getElementById('surahSelect').value;
+      const player = document.getElementById('audioPlayer');
+      const source = document.getElementById('audioSource');
+      source.src = `https://server8.mp3quran.net/afs/${surahVal}.mp3`;
+      player.load();
+      player.play();
+    }
+
+    // Display Current Date
+    function setDate() {
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const today = new Date().toLocaleDateString('ar-SA', options);
+      document.getElementById('current-date').innerText = today;
+    }
+
+    // Init
+    setDate();
+    renderAzkar('sabah');
+  </script>
+</body>
+</html>
