@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>موقع إسلامي  _لمطعم الزين</title>
+  <title>موقع إسلامي - مطعم الزين</title>
   <!-- Google Fonts: Cairo & Amiri -->
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <!-- FontAwesome Icons -->
@@ -41,7 +41,6 @@
       overflow-x: hidden;
     }
 
-    /* Outer Wrapper */
     .app-container {
       width: 100%;
       max-width: 850px;
@@ -80,16 +79,37 @@
 
     .app-title {
       font-family: 'Amiri', serif;
-      font-size: 2.8rem;
+      font-size: 2.5rem;
       color: var(--gold-main);
       margin-bottom: 5px;
       text-shadow: 0 0 15px var(--gold-glow);
     }
 
+    .restaurant-subtitle {
+      font-size: 1.1rem;
+      color: var(--gold-light);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
     .app-subtitle {
       color: var(--text-muted);
       font-size: 0.95rem;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
+      font-style: italic;
+    }
+
+    .address-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      padding: 6px 15px;
+      border-radius: 30px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 15px;
     }
 
     .date-badge {
@@ -114,7 +134,6 @@
       padding: 30px;
       text-align: center;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-      position: relative;
     }
 
     .verse-card h3 {
@@ -280,11 +299,24 @@
     /* Footer */
     footer {
       text-align: center;
-      padding: 20px 0;
-      color: var(--text-muted);
-      font-size: 0.85rem;
+      padding: 25px 0;
       border-top: 1px solid var(--glass-border);
       margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .charity-text {
+      color: #d4af37;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    }
+
+    .footer-note {
+      color: var(--text-muted);
+      font-size: 0.8rem;
     }
   </style>
 </head>
@@ -294,8 +326,13 @@
     
     <!-- Header -->
     <div class="header-card">
-      <h1 class="app-title">بسم الله الرحمن الرحيم</h1>
-      <p class="app-subtitle">املأ ساعاتك  الفارغة بالأستغفار لعل كلمة اليوم تنفعك يوم القيامة </p>
+      <h1 class="app-title">استغفر الله العظيم وأتوب إليه</h1>
+      <div class="restaurant-subtitle">موقع إسلامي لمطعم الزين</div>
+      <div class="address-badge">
+        <i class="fa-solid fa-location-dot"></i>
+        <span>العنوان: سراقب - إدلب (أو اكتب عنوانك هنا)</span>
+      </div>
+      <p class="app-subtitle">"ألا بذكر الله تطمئن القلوب"</p>
       <div class="date-badge">
         <i class="fa-regular fa-calendar-alt"></i>
         <span id="current-date">جاري تحميل التاريخ...</span>
@@ -305,8 +342,8 @@
     <!-- Verse of the day -->
     <div class="verse-card">
       <h3><i class="fa-solid fa-book-quran"></i> آية اليوم</h3>
-      <div class="verse-text">"أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ"</div>
-      <div class="verse-info">سورة الرعد - الآية 28</div>
+      <div class="verse-text">"فَقُلْتُ اسْتَغْفِرُوا رَبَّكُمْ إِنَّهُ كَانَ غَفَّارًا"</div>
+      <div class="verse-info">سورة نوح - الآية 10</div>
     </div>
 
     <!-- Quran Player -->
@@ -335,7 +372,7 @@
       <button class="tab-btn active" onclick="switchCategory('sabah', this)">أذكار الصباح</button>
       <button class="tab-btn" onclick="switchCategory('massa', this)">أذكار المساء</button>
       <button class="tab-btn" onclick="switchCategory('salat', this)">بعد الصلاة</button>
-      <button class="tab-btn" onclick="switchCategory('tasbeeh', this)">تسابيح</button>
+      <button class="tab-btn" onclick="switchCategory('tasbeeh', this)">تسابيح والاستغفار</button>
     </div>
 
     <!-- Azkar List Container -->
@@ -345,40 +382,38 @@
 
     <!-- Footer -->
     <footer>
-      <p style="color:yallow; font-weight:600; font-size:1rem1;">تم صنع هذه الصفحة لتكون صدقة جارية على روح المرحوم عدنان المصري    </p>
-   
+      <p class="charity-text">تم صنع هذه الصفحة لتكون صدقة جارية على روح المرحوم عدنان المصري</p>
+      <p class="footer-note">موقع إسلامي لمطعم الزين | جاهز للرفع على GitHub Pages</p>
     </footer>
 
   </div>
 
   <script>
-    // Azkar Data
     const azkarData = {
       sabah: [
         { text: "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ لا إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لا شَرِيكَ لَهُ.", count: 1, bless: "من قالها حين يصبح أُعطي خير ما في هذا اليوم." },
-        { text: "اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ.", count: 1, bless: "من أذكار الصباح الثابتة عن النبي ﷺ." },
+        { text: "أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ الَّذِي لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ وَأَتُوبُ إِلَيْهِ.", count: 3, bless: "تغفر الذنوب ولو كانت مثل زبد البحر." },
         { text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ: عَدَدَ خَلْقِهِ، وَرِضَا نَفْسِهِ، وَزِنَةَ عَرْشِهِ، وَمِدَادَ كَلِمَاتِهِ.", count: 3, bless: "تعدل ساعات طويلة من الذكر." },
         { text: "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ أَصْلِحْ لِي شَأْنِي كُلَّهُ وَلا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ.", count: 1, bless: "حفظ وصلاح لجميع الشؤون." }
       ],
       massa: [
         { text: "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ وَالْحَمْدُ لِلَّهِ، لا إِلَهَ إِلاَّ اللَّهُ وَحْدَهُ لا شَرِيكَ لَهُ.", count: 1, bless: "من قالها حين يمسي أُعطي خير ما في هذه الليلة." },
-        { text: "اللَّهُمَّ بِكَ أَمْسَيْنَا، وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ وَإِلَيْكَ الْمَصِيرُ.", count: 1, bless: "من أذكار المساء المأثورة." },
+        { text: "أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ وَأَتُوبُ إِلَيْهِ.", count: 100, bless: "مفتاح للرزق والمغفرة." },
         { text: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ.", count: 3, bless: "لم يضره شيء حتى يصبح." }
       ],
       salat: [
-        { text: "أَسْتَغْفِرُ اللَّهَ (ثَلاثاً)، اللَّهُمَّ أَنْتَ السَّلامُ وَمِنْكَ السَّلامُ، تَبَارَكْتَ يَا ذَا الْجَلالِ وَالإِكْرَامِ.", count: 1, bless: "تقال فور الانتهاء من الصلاة الفريضة." },
-        { text: "سُبْحَانَ اللَّهِ، وَالْحَمْدُ لِلَّهِ، وَاللَّهُ أَكْبَرُ.", count: 33, bless: "تغفر الخطايا وإن كانت مثل زبد البحر." }
+        { text: "أَسْتَغْفِرُ اللَّهَ (ثَلاثاً)، اللَّهُمَّ أَنْتَ السَّلامُ وَمِنْكَ السَّلامُ، تَبَارَكْتَ يَا ذَا الْجَلالِ وَالإِكْرَامِ.", count: 1, bless: "تقال فور الانتهاء من الصلاة." },
+        { text: "سُبْحَانَ اللَّهِ، وَالْحَمْدُ لِلَّهِ، وَاللَّهُ أَكْبَرُ.", count: 33, bless: "تغفر الخطايا." }
       ],
       tasbeeh: [
-        { text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ.", count: 100, bless: "كلمتان خفيفتان على اللسان ثقيلتان في الميزان." },
-        { text: "لا حَوْلَ وَلا قُوَّةَ إِلاَّ بِاللَّهِ.", count: 100, bless: "كنز من كنز الجنة." },
-        { text: "اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ.", count: 10, bless: "من صلى عليّ صلاة صلى الله عليه بها عشراً." }
+        { text: "أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ.", count: 100, bless: "تزيل الهم وتفرج الكرب." },
+        { text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ.", count: 100, bless: "خفيفتان على اللسان ثقيلتان في الميزان." },
+        { text: "لا حَوْلَ وَلا قُوَّةَ إِلاَّ بِاللَّهِ.", count: 100, bless: "كنز من كنوز الجنة." }
       ]
     };
 
     let currentTab = 'sabah';
 
-    // Render Azkar List
     function renderAzkar(cat) {
       const container = document.getElementById('azkarGrid');
       container.innerHTML = '';
@@ -399,7 +434,6 @@
       });
     }
 
-    // Handle Counter Click
     function countDown(cat, index, initialCount) {
       const btn = document.getElementById(`btn-${cat}-${index}`);
       let currentVal = parseInt(btn.innerText);
@@ -417,7 +451,6 @@
       }
     }
 
-    // Switch Category
     function switchCategory(cat, element) {
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
       element.classList.add('active');
@@ -425,7 +458,6 @@
       renderAzkar(cat);
     }
 
-    // Quran Audio Player Change
     function playSurah() {
       const surahVal = document.getElementById('surahSelect').value;
       const player = document.getElementById('audioPlayer');
@@ -435,14 +467,12 @@
       player.play();
     }
 
-    // Display Current Date
     function setDate() {
       const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       const today = new Date().toLocaleDateString('ar-SA', options);
       document.getElementById('current-date').innerText = today;
     }
 
-    // Init
     setDate();
     renderAzkar('sabah');
   </script>
